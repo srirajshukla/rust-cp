@@ -1,40 +1,52 @@
-use std::{
-    cmp::max,
-    collections::HashMap,
-};
+use std::str::FromStr;
 
-use proconio::input;
-
-fn most_colorful_candy(candy_color: &Vec<i32>, k: usize) -> usize {
-    let n = candy_color.len();
-    let mut max_color = 1;
-    let mut segment_unique_colors = HashMap::new();
-    for i in 0..k {
-        let count = segment_unique_colors.entry(candy_color[i]).or_insert(1);
-        *count += 1;
-    }
-    for i in (k + 1)..n {
-        let count = segment_unique_colors.entry(candy_color[i]).or_insert(1);
-        *count += 1;
-        let c2 = segment_unique_colors.get_mut(&candy_color[i - k]).unwrap();
-        *c2 -= 1;
-
-        if *c2 == 0 {
-            segment_unique_colors.remove(&candy_color[i - k]);
-        }
-
-        max_color = max(max_color, segment_unique_colors.len());
-    }
-    max_color
+fn solve(){
+    
 }
+
 
 fn main() {
-    input! {
-        n: i32,
-        k: usize,
-        candy_color: [i32; n]
+    let times : usize = single_input();
+    for _ in 0..times {
+        solve();
     }
-
-    let most_colorful_candy = most_colorful_candy(&candy_color, k);
-    println!("{}", &most_colorful_candy);
 }
+
+
+/**
+ * This function reads a single line of input from stdin.
+ */
+#[allow(dead_code)]
+fn input_line() -> String {
+    let mut input_text = String::new();
+    std::io::stdin().read_line(&mut input_text).expect("Failed to read line").to_string();
+    input_text.trim().to_string()
+}
+
+
+/* 
+ * This function is used to read a single value from the input
+ * stream that implements FromStr trait.
+ */
+#[allow(dead_code)]
+fn single_input<T:FromStr>() -> T {
+    let mut input_text = String::new();
+    std::io::stdin().read_line(&mut input_text).expect("Failed to read line");
+    input_text.trim().parse().ok().unwrap()
+}
+
+
+/**
+ * This function is used to read a vector of values from the input
+ * stream that implements FromStr trait.
+ */
+#[allow(dead_code)]
+fn input_vector<T:FromStr>() -> Vec<T> {
+    let mut input_text = String::new();
+    std::io::stdin().read_line(&mut input_text).expect("Failed to read line");
+    let v: Vec<T> = input_text.trim().split_whitespace().map(|e| e.parse().ok().unwrap()).collect();
+    v
+}
+
+// TODO: ADD A DEBUG MACRO THAT PRINTS OUT VARIABLE NAME AND
+// ITS VALUE
